@@ -1,31 +1,29 @@
 package com.eztouch.skinner.handler;
 
-import net.minecraft.client.gui.GuiCustomizeSkin;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 
 import com.eztouch.skinner.client.settings.Keybindings;
 import com.eztouch.skinner.look.ChangeLook;
 import com.eztouch.skinner.reference.Key;
-import com.eztouch.skinner.utility.LogHelper;
 
 public class KeyInputEventHandler
 {
 
 	private static Key getPressedKeybinding()
 	{
+		ChangeLook newChange;
 		if (Keybindings.change.isPressed())
 		{
-			ChangeLook newChange = new ChangeLook("static");
-			LogHelper.info("tried to change the skin");
+			newChange = new ChangeLook("static");
 			return Key.CHANGE;
 		} else if (Keybindings.random.isPressed())
 		{
+			newChange = new ChangeLook("random");
 			return Key.RANDOM;
 		} else if (Keybindings.dynamic.isPressed())
 		{
+			newChange = new ChangeLook("dynamic");
 			return Key.DYNAMIC;
 		} else
 		{
@@ -36,6 +34,6 @@ public class KeyInputEventHandler
 	@SubscribeEvent
 	public void handleKeyInputEvent(InputEvent.KeyInputEvent event)
 	{
-		/*LogHelper.info(*/getPressedKeybinding()/*)*/;
+		getPressedKeybinding();
 	}
 }

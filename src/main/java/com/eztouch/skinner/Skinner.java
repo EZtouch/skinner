@@ -9,6 +9,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import com.eztouch.skinner.handler.ConfigurationHandler;
 import com.eztouch.skinner.handler.KeyInputEventHandler;
+import com.eztouch.skinner.handler.TickingHandler;
+import com.eztouch.skinner.look.*;
 import com.eztouch.skinner.proxy.ClientProxy;
 import com.eztouch.skinner.proxy.IProxy;
 import com.eztouch.skinner.reference.Reference;
@@ -28,26 +30,21 @@ public class Skinner
 	{
 		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
 		FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
-
 		proxy.registerKeyBindings();
-
 		ClientProxy clientP = new ClientProxy();
 		clientP.registerKeyBindings();
-
-		LogHelper.info("Pre Initialization Complete");
 	}
 
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
 		FMLCommonHandler.instance().bus().register(new KeyInputEventHandler());
-		LogHelper.info("Initialization Complete");
 	}
 
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		LogHelper.info("Post Initialization Complete");
+		FMLCommonHandler.instance().bus().register(new TickingHandler());
 	}
 
 }

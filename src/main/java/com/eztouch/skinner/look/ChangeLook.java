@@ -2,40 +2,49 @@ package com.eztouch.skinner.look;
 
 import java.util.ArrayList;
 
-import scala.collection.immutable.List;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.GuiCustomizeSkin;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 
-public class ChangeLook extends GameSettings
+import com.eztouch.skinner.utility.LogHelper;
+
+public class ChangeLook
 {
-	private ArrayList<EnumPlayerModelParts> theList;
-	private GameSettings settings = Minecraft.getMinecraft().gameSettings;
-	private EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+	private static ArrayList<EnumPlayerModelParts> partList;
+	private static GameSettings settings;
 	private int value;
+	private static int counter;
+	private static String mode;
+	private static boolean layer = false;
+	private static boolean changing = false;
 
 	public ChangeLook(String mode)
 	{
-		theList = new ArrayList<EnumPlayerModelParts>();
-		theList.add(net.minecraft.entity.player.EnumPlayerModelParts.HAT);
-		theList.add(net.minecraft.entity.player.EnumPlayerModelParts.CAPE);
-		theList.add(net.minecraft.entity.player.EnumPlayerModelParts.JACKET);
-		theList.add(net.minecraft.entity.player.EnumPlayerModelParts.LEFT_SLEEVE);
-		theList.add(net.minecraft.entity.player.EnumPlayerModelParts.RIGHT_SLEEVE);
-		theList.add(net.minecraft.entity.player.EnumPlayerModelParts.LEFT_PANTS_LEG);
-		theList.add(net.minecraft.entity.player.EnumPlayerModelParts.RIGHT_PANTS_LEG);
+		partList = new ArrayList<EnumPlayerModelParts>();
+		settings = Minecraft.getMinecraft().gameSettings;
+		for (EnumPlayerModelParts part : net.minecraft.entity.player.EnumPlayerModelParts
+				.values())
+		{
+			partList.add(part);
+		}
+		setMode(mode);
+		something();
+	}
+
+	public void something()
+	{
 		if (mode.equalsIgnoreCase("static"))
 		{
-			for (EnumPlayerModelParts part : theList)
+			for (EnumPlayerModelParts part : partList)
 			{
-				settings.switchModelPartEnabled(part);
+				settings.setModelPartEnabled(part, layer);
+				LogHelper.info(part + " has been switched");
 			}
+			layer = !layer;
 		} else if (mode.equalsIgnoreCase("random"))
 		{
-			for (EnumPlayerModelParts part : theList)
+			LogHelper.info("random skin chnage detected");
+			for (EnumPlayerModelParts part : partList)
 			{
 				value = (Math.random() < 0.5) ? 0 : 1;
 				if (value == 1)
@@ -43,6 +52,80 @@ public class ChangeLook extends GameSettings
 					settings.switchModelPartEnabled(part);
 				}
 			}
+		} else if (mode.equalsIgnoreCase("dynamic"))
+		{
+			changing = !changing;
 		}
 	}
+
+	public void setMode(String mode)
+	{
+		this.mode = mode;
+	}
+
+	public static String getMode()
+	{
+		return mode;
+	}
+
+	public static boolean isChanging()
+	{
+		return changing;
+	}
+
+	public static ArrayList<EnumPlayerModelParts> getPartList()
+	{
+		return partList;
+	}
+
+	public void setPartList(ArrayList<EnumPlayerModelParts> partList)
+	{
+		this.partList = partList;
+	}
+
+	public static GameSettings getSettings()
+	{
+		return settings;
+	}
+
+	public void setSettings(GameSettings settings)
+	{
+		this.settings = settings;
+	}
+
+	public int getValue()
+	{
+		return value;
+	}
+
+	public void setValue(int value)
+	{
+		this.value = value;
+	}
+
+	public static int getCounter()
+	{
+		return counter;
+	}
+
+	public static void setCounter(int newCounter)
+	{
+		counter = newCounter;
+	}
+
+	public static boolean isLayer()
+	{
+		return layer;
+	}
+
+	public static void setLayer(boolean layer)
+	{
+		ChangeLook.layer = layer;
+	}
+
+	public static void setChanging(boolean changing)
+	{
+		ChangeLook.changing = changing;
+	}
+
 }

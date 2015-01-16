@@ -8,7 +8,10 @@ import com.eztouch.skinner.reference.Names;
 
 public class Keybindings
 {
-	public static KeyBinding random = new KeyBinding(Names.Keys.RANDOM, Keyboard.KEY_C, Names.Keys.CATEGORY);
-	public static KeyBinding change = new KeyBinding(Names.Keys.CHANGE, Keyboard.KEY_R, Names.Keys.CATEGORY);
-	public static KeyBinding dynamic = new KeyBinding(Names.Keys.DYNAMIC, Keyboard.KEY_L, Names.Keys.CATEGORY);
+	public static KeyBinding random = new KeyBinding(Names.Keys.RANDOM,
+			Keyboard.KEY_R, Names.Keys.CATEGORY);
+	public static KeyBinding change = new KeyBinding(Names.Keys.CHANGE,
+			Keyboard.KEY_C, Names.Keys.CATEGORY);
+	public static KeyBinding dynamic = new KeyBinding(Names.Keys.DYNAMIC,
+			Keyboard.KEY_O, Names.Keys.CATEGORY);
 }
