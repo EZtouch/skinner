@@ -9,12 +9,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import com.eztouch.skinner.handler.ConfigurationHandler;
 import com.eztouch.skinner.handler.KeyInputEventHandler;
-import com.eztouch.skinner.handler.TickingHandler;
-import com.eztouch.skinner.look.*;
+import com.eztouch.skinner.look.ChangeLook;
 import com.eztouch.skinner.proxy.ClientProxy;
 import com.eztouch.skinner.proxy.IProxy;
 import com.eztouch.skinner.reference.Reference;
-import com.eztouch.skinner.utility.LogHelper;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, guiFactory = Reference.GUI_FACTORY_CLASS)
 public class Skinner
@@ -44,7 +42,6 @@ public class Skinner
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		FMLCommonHandler.instance().bus().register(new TickingHandler());
+		FMLCommonHandler.instance().bus().register(new ChangeLook());
 	}
-
 }

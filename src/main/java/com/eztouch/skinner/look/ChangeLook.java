@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EnumPlayerModelParts;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import com.eztouch.skinner.utility.LogHelper;
 
@@ -22,28 +24,36 @@ public class ChangeLook
 	{
 		partList = new ArrayList<EnumPlayerModelParts>();
 		settings = Minecraft.getMinecraft().gameSettings;
+		populatePartList();
+		this.mode = mode;
+		handleSkinChanging();
+	}
+
+	public ChangeLook()
+	{
+		// NOOP
+	}
+
+	public void populatePartList()
+	{
 		for (EnumPlayerModelParts part : net.minecraft.entity.player.EnumPlayerModelParts
 				.values())
 		{
 			partList.add(part);
 		}
-		setMode(mode);
-		something();
 	}
 
-	public void something()
+	public void handleSkinChanging()
 	{
-		if (mode.equalsIgnoreCase("static"))
+		if (mode.equals("change"))
 		{
 			for (EnumPlayerModelParts part : partList)
 			{
 				settings.setModelPartEnabled(part, layer);
-				LogHelper.info(part + " has been switched");
 			}
 			layer = !layer;
-		} else if (mode.equalsIgnoreCase("random"))
+		} else if (mode.equals("random"))
 		{
-			LogHelper.info("random skin chnage detected");
 			for (EnumPlayerModelParts part : partList)
 			{
 				value = (Math.random() < 0.5) ? 0 : 1;
@@ -52,80 +62,28 @@ public class ChangeLook
 					settings.switchModelPartEnabled(part);
 				}
 			}
-		} else if (mode.equalsIgnoreCase("dynamic"))
+		} else if (mode.equals("dynamic"))
 		{
 			changing = !changing;
 		}
 	}
 
-	public void setMode(String mode)
+	@SubscribeEvent
+	public void onPlayerTick(TickEvent.PlayerTickEvent event)
 	{
-		this.mode = mode;
-	}
-
-	public static String getMode()
-	{
-		return mode;
-	}
-
-	public static boolean isChanging()
-	{
-		return changing;
-	}
-
-	public static ArrayList<EnumPlayerModelParts> getPartList()
-	{
-		return partList;
-	}
-
-	public void setPartList(ArrayList<EnumPlayerModelParts> partList)
-	{
-		this.partList = partList;
-	}
-
-	public static GameSettings getSettings()
-	{
-		return settings;
-	}
-
-	public void setSettings(GameSettings settings)
-	{
-		this.settings = settings;
-	}
-
-	public int getValue()
-	{
-		return value;
-	}
-
-	public void setValue(int value)
-	{
-		this.value = value;
-	}
-
-	public static int getCounter()
-	{
-		return counter;
-	}
-
-	public static void setCounter(int newCounter)
-	{
-		counter = newCounter;
-	}
-
-	public static boolean isLayer()
-	{
-		return layer;
-	}
-
-	public static void setLayer(boolean layer)
-	{
-		ChangeLook.layer = layer;
-	}
-
-	public static void setChanging(boolean changing)
-	{
-		ChangeLook.changing = changing;
+		if (changing == true)
+		{
+			counter++;
+			if (counter % 20 == 0)
+			{
+				counter = 0;
+				for (EnumPlayerModelParts part : partList)
+				{
+					settings.setModelPartEnabled(part, layer);
+				}
+				layer = !layer;
+			}
+		}
 	}
 
 }

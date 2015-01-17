@@ -15,7 +15,7 @@ public class KeyInputEventHandler
 		ChangeLook newChange;
 		if (Keybindings.change.isPressed())
 		{
-			newChange = new ChangeLook("static");
+			newChange = new ChangeLook("change");
 			return Key.CHANGE;
 		} else if (Keybindings.random.isPressed())
 		{
