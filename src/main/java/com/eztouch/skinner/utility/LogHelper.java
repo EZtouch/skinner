@@ -3,7 +3,7 @@ package com.eztouch.skinner.utility;
 import com.eztouch.skinner.reference.Reference;
 import org.apache.logging.log4j.Level;
 
-class LogHelper
+public class LogHelper
 {
     private static void log(Level logLevel, Object object)
     {

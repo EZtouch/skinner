@@ -20,6 +20,10 @@ public class KeyInputEventHandler
         } else if (Keybindings.dynamic.isPressed())
         {
             newChange = new ChangeLook("dynamic");
+        } else if (Keybindings.morph.isPressed()){
+            MorphingHandler.Morph();
+        } else if (Keybindings.normal.isPressed()){
+        	MorphingHandler.Normal();
         }
     }
 

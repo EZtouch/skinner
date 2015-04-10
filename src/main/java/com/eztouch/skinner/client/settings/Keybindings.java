@@ -12,4 +12,8 @@ public class Keybindings
             Keyboard.KEY_C, Names.Keys.CATEGORY);
     public static final KeyBinding dynamic = new KeyBinding(Names.Keys.DYNAMIC,
             Keyboard.KEY_O, Names.Keys.CATEGORY);
+    public static final KeyBinding morph = new KeyBinding(Names.Keys.MORPH,
+    		Keyboard.KEY_M, Names.Keys.CATEGORY);
+    public static final KeyBinding normal = new KeyBinding(Names.Keys.NORMAL,
+    		Keyboard.KEY_N, Names.Keys.NORMAL);
 }
