@@ -25,8 +25,8 @@ public class Skinner
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
+        ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         proxy.registerKeyBindings();
         ClientProxy clientP = new ClientProxy();
         clientP.registerKeyBindings();
